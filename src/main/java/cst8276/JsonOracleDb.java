@@ -59,7 +59,7 @@ public class JsonOracleDb extends HttpServlet {
     private String fetchJsonFromDatabase() {
         String result = "";
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT data FROM json_data WHERE id = 3"; // Fetches JSON data with id 3
+            String sql = "SELECT data FROM json_data"; // Fetches JSON data with id 3
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
 

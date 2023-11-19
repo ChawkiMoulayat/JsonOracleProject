@@ -1,20 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Fetch JSON</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Oracle Storage</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
-    <form action="fetch-json" method="post">
-        <input type="submit" value="Submit">
-    </form>
-
-    <!-- Optional: Display JSON in a textarea or div -->
-    <textarea id="jsonDisplay" rows="10" cols="50"></textarea>
-
+<h1>TEAM9</h1>
+	<div style="display: flex; margin-top: 20px;">
+	    <div style="flex: 1;">
+			<div>
+    		<h2>Upload JSON File</h2>
+	    	<form action="insert-json" method="post">
+				<input type="file" id="jsonFileInput" accept=".json">
+				<input type="submit" value="Submit">
+	    	</form>
+			</div>
+			
+			<div style="margin-top: 20px;">
+			    <h2>Stored JSON Data</h2>
+			    <ul id="jsonList"></ul>
+			</div>
+	    </div>
+	    <div style="flex: 1;">
+	        <h2>Selected JSON Data</h2>
+	        <textarea id="jsonDisplay" rows="10" cols="50" readonly></textarea>
+	    </div>
+	</div>
     <script>
           document.querySelector("form").addEventListener("submit", function(event) {
             event.preventDefault();
-            
             fetch("fetch-json", {
                 method: 'POST'
             }).then(response => {

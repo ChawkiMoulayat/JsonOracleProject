@@ -17,9 +17,9 @@
     name="OraclePool" 
     datasource-classname="oracle.jdbc.pool.OracleDataSource" 
     res-type="javax.sql.DataSource">
-    <property name="URL" value="jdbc:oracle:thin:@localhost:1521:orcl1"/>
-    <property name="User" value="myjsondb"/>
-    <property name="Password" value="json"/>
+    <property name="URL" value="jdbc:oracle:thin:@localhost:33306:orcl1"/>
+    <property name="User" value="team9"/>
+    <property name="Password" value="team9pwd"/>
     <property name="DriverClassName" value="oracle.jdbc.driver.OracleDriver"/>
     <!-- Any other properties you want to set -->
   </jdbc-connection-pool>

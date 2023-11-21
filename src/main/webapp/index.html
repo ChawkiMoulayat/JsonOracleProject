@@ -46,11 +46,18 @@
     button:hover {
         background-color: #4cae4c;
     }
+    #successMessage {
+        color: green;
+        margin-top: 20px;
+        text-align: center;
+        display: none; /* Initially hide the message */
+    }
 </style>
 </head>
 <body>
 <div id="container">
     <h1>Project to Save and Display JSON Objects in Oracle Database</h1>
+    <div id="successMessage">JSON submitted successfully</div> 
     <div class="compartment">
         <form id="jsonForm">
             <label for="jsonInput">Enter JSON Data:</label>
@@ -80,6 +87,12 @@
                 },
                 body: jsonData,
             }).then(response => {
+				 if (response.ok) {
+					  document.getElementById("successMessage").style.display = "block";
+                setTimeout(() => { // Hide the message after 4 seconds
+                    document.getElementById("successMessage").style.display = "none";
+                }, 4000);
+            }
                 return response.text().then(text => {
                     console.log("Raw response:", text);
                     return JSON.parse(text);

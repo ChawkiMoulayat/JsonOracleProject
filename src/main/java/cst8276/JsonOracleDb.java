@@ -1,12 +1,13 @@
 package cst8276;
- 
+import org.json.JSONObject; 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
- 
+import org.json.JSONArray;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -82,25 +83,23 @@ public class JsonOracleDb extends HttpServlet {
     }
  
     private String fetchJsonFromDatabase() {
-        String result = "";
-        try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT data FROM json_data WHERE id = 3"; // Fetches JSON data with id 3
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
- 
-            if (rs.next()) {
-                result = rs.getString("data");
-                context.log("Fetched JSON data from database: " + result);
-            }
-        } catch (Exception e) {
-            context.log("Error fetching JSON from database", e);
-        }
-        return result;
-    }
- 
+    	JSONArray jsonArray = new JSONArray();
+    	 try (Connection connection = dataSource.getConnection()) {
+    	        String sql = "SELECT data FROM json_data ORDER BY id";
+    	        PreparedStatement statement = connection.prepareStatement(sql);
+    	        ResultSet rs = statement.executeQuery();
+    	        while (rs.next()) {
+    	            String data = rs.getString("data");
+    	            jsonArray.put(new JSONObject(data)); // Ajouter l'objet JSON au tableau
+    	        }
+    	    } catch (Exception e) {
+    	        context.log("Error fetching JSON from database", e);
+    	    }
+    	    return jsonArray.toString(); // Retourner le tableau JSON en tant que chaîne
+    	}
     private void storeJsonInDatabase(String jsonData) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "UPDATE json_data SET data = ? WHERE id = 3";
+            String sql = "INSERT INTO json_data (id, data) VALUES (json_data_seq.NEXTVAL, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, jsonData);
             int rowsUpdated = statement.executeUpdate();
